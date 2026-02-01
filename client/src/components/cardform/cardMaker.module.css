@@ -1,0 +1,104 @@
+
+.maker {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.title {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.hint {
+  color: #999;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.selectedDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bigQuokka {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.moodLabel {
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-weight: bold;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dateInput {
+  padding: 8px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.textInput {
+  width: 100%;
+  height: 120px;
+  padding: 15px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  resize: none;
+  font-family: inherit;
+}
+
+.textInput:focus {
+  outline: none;
+  border-color: #ccc;
+}
+
+.submitBtn {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+}
+
+.changeMoodBtn {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: #888;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: #ff7675;
+  cursor: pointer;
+}
+

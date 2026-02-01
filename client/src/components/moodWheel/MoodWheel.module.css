@@ -1,0 +1,113 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.overlay:active {
+  cursor: grabbing;
+}
+
+.instruction {
+  position: absolute;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #555;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.wheelContainer {
+  position: absolute;
+  /* CENTER + STRONGER SHIFT RIGHT */
+  left: 51.5%;
+  transform: translateX(-50%);
+  margin-left: 14px; 
+  
+  /* Vertical Position */
+  bottom: 15px; 
+  
+  width: 0; 
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.wheel {
+  width: 0;
+  height: 0;
+  position: relative;
+}
+
+.moodItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform;
+}
+
+.moodBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  /* HUGE QUOKKAS (130px) */
+  width: 130px; 
+  height: 130px;
+  
+  pointer-events: auto;
+  
+  /* Re-Center pivot (Half of 130 is 65) */
+  margin-left: -65px;
+  margin-top: -65px;
+  
+  transition: transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.moodImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3)); /* Stronger shadow for depth */
+  transition: transform 0.2s;
+  pointer-events: none;
+}
+
+.moodBtn:hover .moodImage {
+  transform: scale(1.15);
+}
+
+.closeZone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  z-index: -1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

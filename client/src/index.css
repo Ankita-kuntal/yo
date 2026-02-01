@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap');
+
+:root {
+  --bg-color: #fff7e7;
+  --bg-color-opacity: #fff7e7a1;
+  --bg-image: url('/src/line.svg');
+  --black-color: #222222;
+  --blue-color: rgb(143, 182, 255);
+  --dark-blue-color: rgb(62, 130, 255);
+  --light-gray-color: #dddddd;
+  --box-shadow: 0 2px 5px 0px rgb(0 0 0 / 20%);
+  --border-radius: 10px;
+  --add-btn-size: 64px;
+  --add-btn-bottom: 40px;
+  --moods-bottom: 55px;
+  --mood-btn-size: 75px;
+  --home-card-size: 75px;
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --add-btn-size: 50px;
+    --add-btn-bottom: 25px;
+    --moods-bottom: 40px;
+    --mood-btn-size: 58px;
+    --home-card-size: 58px;
+  }
+}
+
+html,
+body {
+  font-size: 24px;
+  color: var(--black-color);
+  margin: 0;
+  padding: 0;
+  font-family: 'Gaegu', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  color: inherit;
+  background: none;
+  border-style: none;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  background: transparent;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 16px;
+  background-color: var(--bg-color);
+  background-image: var(--bg-image);
+}
+
+/* FORCE CLEAR BACKGROUNDS */
+#root, .App {
+  background-color: transparent !important;
+  min-height: 100vh;
+}

@@ -1,0 +1,108 @@
+.card {
+  position: relative;
+  /* SKY BLUE STICKY NOTE COLOR 👇 */
+  background-color: #e1f5fe; 
+  width: 100%;
+  height: 220px;
+  padding: 45px 25px 20px 25px; /* More top padding for big tape */
+  box-shadow: 
+    0 4px 6px rgba(0,0,0,0.05),
+    0 10px 20px rgba(0,0,0,0.1);
+  border-radius: 2px 2px 15px 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  
+  /* Subtle texture */
+  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+}
+
+/* THE NEW WIDER, TORN TAPE */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -15px; 
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  
+  /* WIDER AND TALLER */
+  width: 140px; 
+  height: 45px;
+  
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1;
+
+  /* JAGGED EDGES (TORN LOOK) using Clip Path */
+  /* This creates a zigzag cut on left and right sides */
+  clip-path: polygon(
+    0% 10%, 5% 0%, 10% 10%, 15% 0%, 20% 10%, 25% 0%, 30% 10%, 35% 0%, 40% 10%, 45% 0%, 50% 10%, 55% 0%, 60% 10%, 65% 0%, 70% 10%, 75% 0%, 80% 10%, 85% 0%, 90% 10%, 95% 0%, 100% 10%, 
+    100% 90%, 95% 100%, 90% 90%, 85% 100%, 80% 90%, 75% 100%, 70% 90%, 65% 100%, 60% 90%, 55% 100%, 50% 90%, 45% 100%, 40% 90%, 35% 100%, 30% 90%, 25% 100%, 20% 90%, 15% 100%, 10% 90%, 5% 100%, 0% 90%
+  );
+}
+
+.card:hover {
+  transform: translateY(-5px) rotate(1deg) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  /* Slightly brighter blue on hover */
+  background-color: #e0f7fa; 
+  z-index: 10;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+/* DATE ON TAPE */
+.dateBadge {
+  position: absolute;
+  /* Moved down slightly to fit new tape center */
+  top: -30px; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  
+  color: #455a64; /* Darker blue-grey text */
+  font-weight: 800;
+  font-size: 1.1rem; /* Bigger font */
+  font-family: 'Comic Sans MS', cursive;
+  letter-spacing: 1px;
+  width: 100%;
+  text-align: center;
+}
+
+.moodEmoji {
+  transition: transform 0.2s;
+  filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.1));
+}
+.card:hover .moodEmoji {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #37474f;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: inherit;
+  border-bottom: 2px dotted #90a4ae;
+  padding-bottom: 5px;
+}
+
+.preview {
+  font-size: 1rem;
+  color: #546e7a;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

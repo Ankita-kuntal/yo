@@ -1,0 +1,123 @@
+.home {
+  min-height: 100vh;
+  /* CHANGE THIS TO TRANSPARENT 👇 */
+  background-color: transparent; 
+  padding: 40px 20px;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  position: relative;
+}
+
+
+.appTitle {
+  text-align: center;
+  color: white;
+  /* Reduced margin and font size */
+  margin-bottom: 25px;
+  margin-top: 10px;
+  font-size: 2.5rem; /* Much smaller than before */
+  font-weight: 900;
+  /* Softer, cuter text shadow */
+  text-shadow: 
+    2px 2px 0px #4fc3f7, 
+    4px 4px 8px rgba(0,0,0,0.2);
+  letter-spacing: 1px;
+  transform: rotate(-2deg); /* Jaunty tilt */
+}
+
+
+
+/* Clean Grid for Cards Only */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 80px; /* Space for FAB */
+}
+
+.noEntries {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin-top: 50px;
+}
+
+/* Logout Button */
+.logoutBtn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: transparent;
+  border: 2px solid rgba(0,0,0,0.1);
+  color: #666;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #ff7675;
+  color: white;
+  border-color: #ff7675;
+}
+
+/* FLOATING ACTION BUTTON (FAB) - Bottom Middle */
+.fab {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #ff9f1c, #e08e1a);
+  color: white;
+  font-size: 40px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 100; /* Above everything else */
+  padding-bottom: 5px;
+}
+
+.fab:hover {
+  transform: translateX(-50%) scale(1.1); /* Keep centered while scaling */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.fab:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto 20px auto;
+  padding: 0 10px;
+}
+
+.viewAllBtn {
+  background: none;
+  border: 2px solid #ff9f1c;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff9f1c;
+  transition: all 0.2s;
+}
+
+.viewAllBtn:hover {
+  background: #ff9f1c;
+  color: white;
+}

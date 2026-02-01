@@ -1,0 +1,106 @@
+.container {
+  min-height: 100vh;
+  padding: 40px 20px;
+  /* CHANGE THIS TO TRANSPARENT 👇 */
+  background-color: transparent;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+}
+/* ... keep the rest ... */
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #444;
+  margin: 0;
+}
+
+.backBtn {
+  background: none;
+  border: 2px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background-color: #fff;
+  border-color: #aaa;
+  color: #333;
+}
+
+/* SEARCH BAR SECTION */
+.searchBar {
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; /* Wraps on mobile */
+}
+
+.searchInput, .dateInput {
+  padding: 15px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: white;
+  transition: border-color 0.2s;
+  font-family: inherit; /* Keeps Comic Sans look */
+}
+
+.searchInput {
+  flex: 2; /* Takes up more space */
+  min-width: 200px;
+}
+
+.dateInput {
+  flex: 1;
+  min-width: 150px;
+}
+
+.searchInput:focus, .dateInput:focus {
+  outline: none;
+  border-color: #ff9f1c; /* Orange focus color */
+}
+
+/* THE GRID LAYOUT */
+.grid {
+  display: grid;
+  /* Auto-fill: Fits as many columns as possible (min 300px wide) */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Empty State Message */
+.grid:empty::after {
+  content: "No memories found matching your search... 🍃";
+  display: block;
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin-top: 50px;
+}
+
+/* Mobile Tweak */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .searchBar {
+    flex-direction: column;
+  }
+}
