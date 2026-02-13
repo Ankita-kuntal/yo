@@ -2,11 +2,12 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Helper to Generate Token
+// Helper to Generate Token - FIXED! ✅
 const generateToken = (id) => {
-  return jwt.sign({ id }, "MY_SUPER_SECRET_KEY_123", { expiresIn: '30d' });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
+// REST OF YOUR CODE STAYS THE SAME...
 // 1. REGISTER
 const registerUser = async (req, res) => {
   try {
@@ -49,23 +50,19 @@ const loginUser = async (req, res) => {
   }
 };
 
-// 3. GOOGLE LOGIN (NEW!)
+// 3. GOOGLE LOGIN
 const googleLogin = async (req, res) => {
   try {
-    const { email } = req.body; // We trust Firebase verified this email
-
-    // Check if user exists
+    const { email } = req.body;
     let user = await User.findOne({ email });
 
     if (user) {
-      // User exists -> Log them in
       res.json({
         _id: user._id,
         email: user.email,
         token: generateToken(user._id)
       });
     } else {
-      // User doesn't exist -> Create them with a dummy password
       const randomPassword = Math.random().toString(36).slice(-8);
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(randomPassword, salt);

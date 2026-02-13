@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchDiaries } from '../../api/diaryApi';
 import Card from '../../components/card/card';
-import MoodWheel from '../../components/moodWheel/MoodWheel'; // Import Wheel
-import { useAuth } from '../../context/AuthContext';
+import MoodWheel from '../../components/moodWheel/MoodWheel';
+import Header from '../../components/header_home/header'; // 👈 IMPORT THE NEW HEADER
 import styles from './home.module.css';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  // We removed 'useAuth' from here because Header handles logout now!
   const [diaries, setDiaries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showWheel, setShowWheel] = useState(false); // Control wheel visibility
+  const [showWheel, setShowWheel] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -26,24 +26,19 @@ const Home = () => {
     }
   };
 
-  // 1. Click "+" -> Show Wheel (on this page)
   const handleAddClick = () => {
     setShowWheel(true);
   };
 
-  // 2. Select Mood -> Navigate to Editor Page with mood state
-  // ... inside Home component
-
   const handleMoodSelect = (mood) => {
     setShowWheel(false);
-    // Go DIRECTLY to the editor page
     navigate('/new-memory', { state: { selectedMood: mood } });
   };
 
   return (
     <section className={styles.home}>
-      <button onClick={logout} className={styles.logoutBtn}>Logout</button>
-      <h1 className={styles.appTitle}>Mood Diary</h1>
+      {/* 👇 NEW HEADER IS HERE */}
+      <Header />
 
       {/* RECENT MEMORIES HEADER */}
       <div className={styles.sectionHeader}>
@@ -53,12 +48,11 @@ const Home = () => {
         </button>
       </div>
 
-      {/* THE GRID (Limit to 4) */}
+      {/* THE GRID (Limit to 6) */}
       <div className={styles.gridContainer}>
         {loading ? (
           <p>Loading...</p>
         ) : diaries.length > 0 ? (
-          // SLICE TAKES ONLY THE FIRST 6
           diaries.slice(0, 6).map((d) => (
             <div key={d._id} onClick={() => navigate(`/memory/${d._id}`)} style={{cursor: 'pointer'}}>
                <Card diary={d} />
@@ -69,19 +63,14 @@ const Home = () => {
         )}
       </div>
 
-      {/* THE FLOATING "+" BUTTON (Bottom Middle) */}
-      <button className={styles.fab} onClick={handleAddClick}>
-        +
-      </button>
+      <button className={styles.fab} onClick={handleAddClick}>+</button>
 
-      {/* THE WHEEL POPUP (Blurs background) */}
       {showWheel && (
         <MoodWheel 
           onMoodSelect={handleMoodSelect} 
           onClose={() => setShowWheel(false)} 
         />
       )}
-
     </section>
   );
 };

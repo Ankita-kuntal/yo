@@ -1,108 +1,111 @@
 .card {
   position: relative;
-  /* SKY BLUE STICKY NOTE COLOR 👇 */
-  background-color: #e1f5fe; 
+  background-color: #fff;
   width: 100%;
-  height: 220px;
-  padding: 45px 25px 20px 25px; /* More top padding for big tape */
-  box-shadow: 
-    0 4px 6px rgba(0,0,0,0.05),
-    0 10px 20px rgba(0,0,0,0.1);
-  border-radius: 2px 2px 15px 2px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  overflow: hidden;
+  height: 240px;
+  padding: 45px 20px 20px 20px;
   
-  /* Subtle texture */
+  /* ☁️ Soft "Floating Paper" Shadow */
+  box-shadow: 
+    2px 5px 15px rgba(0,0,0,0.08), 
+    1px 2px 4px rgba(0,0,0,0.05);
+  
+  /* TORN PAPER EDGE EFFECT */
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 100%, 
+    98% 99%, 95% 100%, 93% 99%, 90% 100%, 88% 99%, 85% 100%, 83% 99%, 80% 100%, 
+    78% 99%, 75% 100%, 73% 99%, 70% 100%, 68% 99%, 65% 100%, 63% 99%, 60% 100%, 
+    58% 99%, 55% 100%, 53% 99%, 50% 100%, 48% 99%, 45% 100%, 43% 99%, 40% 100%, 
+    38% 99%, 35% 100%, 33% 99%, 30% 100%, 28% 99%, 25% 100%, 23% 99%, 20% 100%, 
+    18% 99%, 15% 100%, 13% 99%, 10% 100%, 8% 99%, 5% 100%, 3% 99%, 0% 100%
+  );
+  
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  
+  /* Subtle paper grain texture */
   background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
 }
 
-/* THE NEW WIDER, TORN TAPE */
+/* 🎀 THE WASHI TAPE */
 .card::before {
   content: '';
   position: absolute;
-  top: -15px; 
+  top: -12px;
   left: 50%;
-  transform: translateX(-50%) rotate(-1deg);
+  transform: translateX(-50%) rotate(-2deg);
+  width: 100px;
+  height: 35px;
   
-  /* WIDER AND TALLER */
-  width: 140px; 
-  height: 45px;
-  
-  background-color: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(2px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 1;
-
-  /* JAGGED EDGES (TORN LOOK) using Clip Path */
-  /* This creates a zigzag cut on left and right sides */
-  clip-path: polygon(
-    0% 10%, 5% 0%, 10% 10%, 15% 0%, 20% 10%, 25% 0%, 30% 10%, 35% 0%, 40% 10%, 45% 0%, 50% 10%, 55% 0%, 60% 10%, 65% 0%, 70% 10%, 75% 0%, 80% 10%, 85% 0%, 90% 10%, 95% 0%, 100% 10%, 
-    100% 90%, 95% 100%, 90% 90%, 85% 100%, 80% 90%, 75% 100%, 70% 90%, 65% 100%, 60% 90%, 55% 100%, 50% 90%, 45% 100%, 40% 90%, 35% 100%, 30% 90%, 25% 100%, 20% 90%, 15% 100%, 10% 90%, 5% 100%, 0% 90%
+  /* Semi-transparent Washi Tape Look */
+  background-color: rgba(255, 218, 224, 0.7); /* Soft Pink Tape */
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    rgba(255, 255, 255, 0.5) 5px,
+    rgba(255, 255, 255, 0.5) 10px
   );
+  
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  backdrop-filter: blur(1px);
+  z-index: 5;
 }
 
+/* Hover Effect: Lift the paper up */
 .card:hover {
-  transform: translateY(-5px) rotate(1deg) scale(1.02);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-  /* Slightly brighter blue on hover */
-  background-color: #e0f7fa; 
+  transform: translateY(-5px) scale(1.02) !important; /* Override rotation */
+  box-shadow: 5px 15px 25px rgba(0,0,0,0.15);
   z-index: 10;
 }
 
+/* Internal Layout */
 .cardHeader {
   display: flex;
-  justify-content: flex-end; 
-  align-items: center;
+  justify-content: flex-end;
   margin-bottom: 15px;
-  position: relative;
 }
 
-/* DATE ON TAPE */
+/* Date stamped on the paper */
 .dateBadge {
   position: absolute;
-  /* Moved down slightly to fit new tape center */
-  top: -30px; 
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  
-  color: #455a64; /* Darker blue-grey text */
-  font-weight: 800;
-  font-size: 1.1rem; /* Bigger font */
-  font-family: 'Comic Sans MS', cursive;
-  letter-spacing: 1px;
-  width: 100%;
-  text-align: center;
+  top: 10px;
+  left: 15px;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 0.9rem;
+  color: #888;
+  transform: rotate(-3deg);
+  border-bottom: 1px dotted #ccc;
 }
 
 .moodEmoji {
-  transition: transform 0.2s;
-  filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.1));
-}
-.card:hover .moodEmoji {
-  transform: scale(1.1) rotate(10deg);
+  font-size: 1.8rem;
+  opacity: 0.9;
 }
 
 .title {
+  font-family: 'Gloria Hallelujah', cursive;
   font-size: 1.4rem;
-  font-weight: 800;
-  color: #37474f;
+  color: #333;
   margin: 0 0 10px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: inherit;
-  border-bottom: 2px dotted #90a4ae;
+  border-bottom: 2px solid #f0f0f0; /* Notebook line */
   padding-bottom: 5px;
 }
 
 .preview {
-  font-size: 1rem;
-  color: #546e7a;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
   line-height: 1.5;
+  color: #555;
+  
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ✨ RANDOM ROTATIONS FOR A MESSY LOOK ✨ */
+/* We use nth-child to rotate cards randomly so they look scattered */
+.card:nth-child(odd) { transform: rotate(1deg); }
+.card:nth-child(even) { transform: rotate(-1.5deg); }
+.card:nth-child(3n) { transform: rotate(2deg); }

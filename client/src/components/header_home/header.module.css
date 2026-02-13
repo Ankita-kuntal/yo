@@ -1,44 +1,40 @@
 .header {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #fff; /* White background */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px 0;
+  margin: 0 auto 10px auto;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.logo img {
-  height: 50px;
-  width: auto;
-  object-fit: contain;
-}
-
-.logo span {
-  font-size: 1.5rem;
-  font-weight: bold;
+/* Handwritten Title */
+.paperTitle {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 3rem;
+  font-weight: 900;
   color: #333;
-  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+  letter-spacing: 2px;
+  transform: rotate(-2deg);
 }
 
+.paperTitle::before { display: none; } /* Remove old tape */
+
+/* Minimal Logout Icon */
 .logoutBtn {
-  background: transparent;
-  border: 2px solid #ff7675;
-  color: #ff7675;
-  padding: 8px 16px;
-  border-radius: 20px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
   cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  color: #888;
+  transition: color 0.2s;
 }
 
 .logoutBtn:hover {
-  background: #ff7675;
-  color: white;
+  color: #ff7675;
 }
