@@ -1,0 +1,26 @@
+:root {
+  /* Colors */
+  --sky-blue: #87CEEB;
+  --light-sky: #E0F6FF;
+  --deep-sky: #5DADE2;
+  --cloud-white: #F8F9FA;
+  --pastel-pink: #FFB6C1;
+  --pastel-yellow: #FFFACD;
+  --paper-cream: #FFF9E3;
+  
+  /* Fonts */
+  --font-handwritten: 'Caveat', cursive;
+  --font-body: 'Patrick Hand', cursive;
+  
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.15);
+}

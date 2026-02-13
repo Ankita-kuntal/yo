@@ -2,6 +2,7 @@ import React from 'react';
 import { moodList } from '../../utils/moodData';
 import styles from './card.module.css';
 
+
 const Card = ({ diary }) => {
   const moodObj = moodList.find((m) => m.name === diary.mood) || moodList[0];
 

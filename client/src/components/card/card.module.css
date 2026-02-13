@@ -1,111 +1,106 @@
 .card {
   position: relative;
-  background-color: #fff;
-  width: 100%;
-  height: 240px;
-  padding: 45px 20px 20px 20px;
-  
-  /* ☁️ Soft "Floating Paper" Shadow */
+  background: linear-gradient(135deg, #FFF9E3 0%, #FFFEF7 100%);
+  padding: 30px 25px;
+  border-radius: 12px;
   box-shadow: 
-    2px 5px 15px rgba(0,0,0,0.08), 
-    1px 2px 4px rgba(0,0,0,0.05);
-  
-  /* TORN PAPER EDGE EFFECT */
-  clip-path: polygon(
-    0% 0%, 100% 0%, 100% 100%, 
-    98% 99%, 95% 100%, 93% 99%, 90% 100%, 88% 99%, 85% 100%, 83% 99%, 80% 100%, 
-    78% 99%, 75% 100%, 73% 99%, 70% 100%, 68% 99%, 65% 100%, 63% 99%, 60% 100%, 
-    58% 99%, 55% 100%, 53% 99%, 50% 100%, 48% 99%, 45% 100%, 43% 99%, 40% 100%, 
-    38% 99%, 35% 100%, 33% 99%, 30% 100%, 28% 99%, 25% 100%, 23% 99%, 20% 100%, 
-    18% 99%, 15% 100%, 13% 99%, 10% 100%, 8% 99%, 5% 100%, 3% 99%, 0% 100%
-  );
-  
-  transition: transform 0.3s ease;
+    var(--shadow-md),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  overflow: visible;
   
-  /* Subtle paper grain texture */
-  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+  /* Paper texture */
+  background-image: url("https://www.transparenttextures.com/patterns/paper.png");
+  
+  /* Torn top edge */
+  border-top: 4px solid #E8E4D9;
+  clip-path: polygon(
+    0 3%, 2% 0, 4% 3%, 6% 0, 8% 3%, 10% 0, 12% 3%, 14% 0, 16% 3%, 18% 0,
+    20% 3%, 22% 0, 24% 3%, 26% 0, 28% 3%, 30% 0, 32% 3%, 34% 0, 36% 3%, 38% 0,
+    40% 3%, 42% 0, 44% 3%, 46% 0, 48% 3%, 50% 0, 52% 3%, 54% 0, 56% 3%, 58% 0,
+    60% 3%, 62% 0, 64% 3%, 66% 0, 68% 3%, 70% 0, 72% 3%, 74% 0, 76% 3%, 78% 0,
+    80% 3%, 82% 0, 84% 3%, 86% 0, 88% 3%, 90% 0, 92% 3%, 94% 0, 96% 3%, 98% 0, 100% 3%,
+    100% 100%, 0 100%
+  );
 }
 
-/* 🎀 THE WASHI TAPE */
+/* Washi tape sticker */
 .card::before {
   content: '';
   position: absolute;
-  top: -12px;
+  top: -15px;
   left: 50%;
-  transform: translateX(-50%) rotate(-2deg);
+  transform: translateX(-50%) rotate(-1.5deg);
   width: 100px;
-  height: 35px;
-  
-  /* Semi-transparent Washi Tape Look */
-  background-color: rgba(255, 218, 224, 0.7); /* Soft Pink Tape */
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 5px,
-    rgba(255, 255, 255, 0.5) 5px,
-    rgba(255, 255, 255, 0.5) 10px
+  height: 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(135, 206, 235, 0.3)
   );
-  
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  backdrop-filter: blur(1px);
-  z-index: 5;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.1),
+    inset 0 1px 2px rgba(255,255,255,0.8);
+  border-radius: 2px;
+  z-index: 1;
 }
 
-/* Hover Effect: Lift the paper up */
 .card:hover {
-  transform: translateY(-5px) scale(1.02) !important; /* Override rotation */
-  box-shadow: 5px 15px 25px rgba(0,0,0,0.15);
-  z-index: 10;
+  transform: translateY(-8px) rotate(1deg);
+  box-shadow: 
+    0 15px 30px rgba(135, 206, 235, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
-/* Internal Layout */
 .cardHeader {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 15px;
 }
 
-/* Date stamped on the paper */
-.dateBadge {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  font-family: 'Gloria Hallelujah', cursive;
-  font-size: 0.9rem;
-  color: #888;
-  transform: rotate(-3deg);
-  border-bottom: 1px dotted #ccc;
+.moodSticker {
+  font-size: 2.5rem;
+  background: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 3px 6px rgba(0,0,0,0.1),
+    inset 0 -2px 4px rgba(0,0,0,0.05);
+  transform: rotate(-8deg);
+  animation: bobble 4s ease-in-out infinite;
 }
 
-.moodEmoji {
-  font-size: 1.8rem;
-  opacity: 0.9;
+@keyframes bobble {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50% { transform: rotate(-5deg) translateY(-3px); }
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #666;
+  font-family: var(--font-handwritten);
 }
 
 .title {
-  font-family: 'Gloria Hallelujah', cursive;
-  font-size: 1.4rem;
-  color: #333;
-  margin: 0 0 10px 0;
-  border-bottom: 2px solid #f0f0f0; /* Notebook line */
-  padding-bottom: 5px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--deep-sky);
+  margin-bottom: 10px;
+  font-family: var(--font-handwritten);
 }
 
-.preview {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: #555;
-  
+.text {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-/* ✨ RANDOM ROTATIONS FOR A MESSY LOOK ✨ */
-/* We use nth-child to rotate cards randomly so they look scattered */
-.card:nth-child(odd) { transform: rotate(1deg); }
-.card:nth-child(even) { transform: rotate(-1.5deg); }
-.card:nth-child(3n) { transform: rotate(2deg); }
