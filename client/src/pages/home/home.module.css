@@ -103,6 +103,10 @@
   align-items: start; /* Prevent stretching */
 }
 
+.gridContainer > div:nth-child(n+4) {
+  margin-top: 50px;
+}
+
 .noEntries {
   grid-column: 1 / -1;
   text-align: center;
