@@ -1,18 +1,92 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.card {
+  position: relative;
+  background: linear-gradient(135deg, #FFF9E3 0%, #FFFEF7 100%);
+  
+  /* INCREASED HEIGHT */
+  height: 220px;
+  
+  /* Width adapts to the grid column */
   width: 100%;
-  height: 60px;
-  position: sticky;
-  left: 0;
-  top: 0;
-  margin-bottom: 20px;
-  z-index: 9;
-  background-color: var(--bg-color);
-  background-image: var(--bg-image);
+  
+  padding: 20px 16px;
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 6px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  
+  background-image: url("https://www.transparenttextures.com/patterns/paper.png");
+  border-top: 3px solid #E8E4D9;
 }
 
-.year {
-  text-transform: uppercase;
+/* Washi tape decoration */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 80px;
+  height: 24px;
+  background: linear-gradient(180deg, rgba(180, 228, 255, 0.85), rgba(135, 206, 235, 0.75));
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-5px) rotate(1deg);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.moodSticker {
+  font-size: 1.8rem;
+  background: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transform: rotate(-5deg);
+}
+
+.date {
+  font-size: 0.85rem;
+  color: #888;
+  font-family: var(--font-handwritten);
+  margin-top: 5px;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 8px;
+  font-family: var(--font-handwritten);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Shows more lines now that height is increased */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  font-family: sans-serif; /* Readable font for body text */
 }

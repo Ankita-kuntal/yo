@@ -1,23 +1,20 @@
 import React from 'react';
-import { useAuth } from '../../context/AuthContext';
 import styles from './header.module.css';
+import { useAuth } from '../../context/AuthContext'; // Assuming this is where your auth lives
 
 const Header = () => {
-  const { logout } = useAuth();
+  const { logout } = useAuth(); // Get logout function
 
   return (
     <header className={styles.header}>
-      {/* Tilted Paper Title */}
-      <div className={styles.paperTitle}>
-        Mood Diary
-      </div>
+      <h1 className={styles.title}>Mood Diary</h1>
       
-      {/* Aesthetic Doodle Door */}
-      <button onClick={logout} className={styles.logoutBtn} title="Log Out">
+      <button onClick={logout} className={styles.logoutBtn} title="Logout">
+        {/* Simple Logout SVG Icon */}
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
-          width="20" 
-          height="20" 
+          width="24" 
+          height="24" 
           viewBox="0 0 24 24" 
           fill="none" 
           stroke="currentColor" 
@@ -25,9 +22,9 @@ const Header = () => {
           strokeLinecap="round" 
           strokeLinejoin="round"
         >
-          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-          <polyline points="10 17 15 12 10 7" />
-          <line x1="15" y1="12" x2="3" y2="12" />
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
         </svg>
       </button>
     </header>

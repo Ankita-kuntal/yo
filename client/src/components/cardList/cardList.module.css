@@ -1,9 +1,17 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px 0;
+  /* Reduced min-width to 200px to make cards narrower */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  
+  /* Equal gap between rows and columns */
+  gap: 24px;
+  
+  /* Centers the whole grid on the screen */
+  justify-content: center;
+  
+  padding: 24px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .empty {
@@ -11,4 +19,6 @@
   color: #777;
   font-size: 1.2rem;
   margin-top: 40px;
+  width: 100%;
+  font-family: var(--font-handwritten);
 }

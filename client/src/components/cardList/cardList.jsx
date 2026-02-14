@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../card/card'; // We import the single Card component
+import Card from '../card/card'; 
 import styles from './cardList.module.css';
 
 const CardList = ({ diaries }) => {
@@ -10,7 +10,6 @@ const CardList = ({ diaries }) => {
   return (
     <div className={styles.grid}>
       {diaries.map((diary) => (
-        // Pass the "diary" data to the Card
         <Card key={diary._id} diary={diary} />
       ))}
     </div>
