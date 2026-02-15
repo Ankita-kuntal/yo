@@ -84,11 +84,19 @@ const EntryDetails = () => {
           <div className={styles.textContent}>
             <p>{diary.text}</p>
           </div>
-          {diary.image && (
-            <div className={styles.imageContent}>
-              <img src={diary.image} alt="Memory" />
-            </div>
-          )}
+          {diary.imageUrl && (
+  <div className={styles.imageContent}>
+    <img 
+      src={diary.imageUrl} 
+      alt="Memory"
+      onError={(e) => {
+        console.error('Failed to load image:', diary.image);
+        e.target.style.display = 'none';
+      }}
+      onLoad={() => console.log('Image loaded successfully:', diary.image)}
+    />
+  </div>
+)}
         </div>
       </div>
 

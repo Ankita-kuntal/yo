@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { createDiary, updateDiary } from '../../api/diaryApi'; 
+import { uploadImage } from '../../api/uploadApi';
 import { moodList } from '../../utils/moodData'; 
 import styles from './cardMaker.module.css';
 
@@ -11,11 +12,8 @@ const CardMaker = () => {
   const textareaRef = useRef(null);
   const imageRef = useRef(null);
   
-  // Check if we're in edit mode
   const editMode = location.state?.editMode || false;
   const existingDiary = location.state?.diaryData || null;
-  
-  // Get mood from navigation state (default to Happy if missing)
   const initialMood = editMode ? existingDiary.mood : (location.state?.selectedMood || 'Happy');
 
   const [moodName, setMoodName] = useState(initialMood);
@@ -24,35 +22,31 @@ const CardMaker = () => {
   const [date, setDate] = useState(
     editMode ? existingDiary.date.split('T')[0] : new Date().toISOString().split('T')[0]
   ); 
-  const [image, setImage] = useState(editMode && existingDiary.image ? existingDiary.image : null);
+  // Changed: Check for imageUrl instead of image
+  const [image, setImage] = useState(editMode && existingDiary.imageUrl ? existingDiary.imageUrl : null);
   const [loading, setLoading] = useState(false);
   const [showMoodSelector, setShowMoodSelector] = useState(false);
 
   const currentMoodObj = moodList.find(m => m.name === moodName) || moodList[0];
 
-  // Adjust textarea height to match image height
   useEffect(() => {
-    if (image && imageRef.current && textareaRef.current) {
+    if (image && image !== 'loading' && imageRef.current && textareaRef.current) {
       const adjustHeight = () => {
         const imageHeight = imageRef.current.offsetHeight;
         if (imageHeight > 0) {
-          // Set textarea height to match image height
           textareaRef.current.style.height = `${Math.max(imageHeight, 300)}px`;
         }
       };
 
-      // Adjust after image loads
       if (imageRef.current.complete) {
         adjustHeight();
       } else {
         imageRef.current.onload = adjustHeight;
       }
 
-      // Also adjust on window resize
       window.addEventListener('resize', adjustHeight);
       return () => window.removeEventListener('resize', adjustHeight);
     } else if (!image && textareaRef.current) {
-      // Reset to default height when no image
       textareaRef.current.style.height = '250px';
     }
   }, [image]);
@@ -66,22 +60,19 @@ const CardMaker = () => {
         text,
         title: title || 'Untitled',
         label: 'Daily',
-        image: image || undefined
+        imageUrl: image && image !== 'loading' ? image : undefined  // Changed to imageUrl
       };
 
       if (editMode) {
-        // Update existing entry
         await updateDiary(existingDiary._id, diaryData);
       } else {
-        // Create new entry
         await createDiary(diaryData);
       }
       
-      navigate('/dashboard'); // Go back home after saving
+      navigate('/dashboard');
     } catch (error) {
-      // Better error handling
       if (error.response && error.response.status === 400) {
-        alert("⚠️ You already have an entry for this date! Please choose a different date or edit the existing entry.");
+        alert("⚠️ You already have an entry for this date! Please choose a different date.");
       } else {
         alert("Error saving: " + error.message);
       }
@@ -90,25 +81,31 @@ const CardMaker = () => {
   };
 
   const handleAddImage = () => {
-    // Trigger file input click
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      // Check if file is an image
-      if (!file.type.startsWith('image/')) {
-        alert('Please select an image file!');
-        return;
-      }
+    if (!file) return;
 
-      // Convert to base64 or blob URL for preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result); // base64 string
-      };
-      reader.readAsDataURL(file);
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file!');
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image must be less than 10MB!');
+      return;
+    }
+
+    try {
+      setImage('loading');
+      const response = await uploadImage(file);
+      const fullUrl = response.url;
+      setImage(fullUrl);
+    } catch (error) {
+      alert('Failed to upload: ' + error.message);
+      setImage(null);
     }
   };
 
@@ -131,31 +128,26 @@ const CardMaker = () => {
     setShowMoodSelector(false);
   };
 
-  // Format date parts
   const dateObj = new Date(date);
   const monthYear = dateObj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   const dayNumber = dateObj.getDate();
 
   return (
     <div className={styles.pageWrapper}>
-      {/* Back Button */}
       <button onClick={() => navigate(-1)} className={styles.backBtn}>
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
       </button>
 
-      {/* Save Button - Top Right */}
-      <button onClick={handleSubmit} disabled={loading} className={styles.saveBtn}>
+      <button onClick={handleSubmit} disabled={loading || image === 'loading'} className={styles.saveBtn}>
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
       </button>
 
-      {/* Month and Year - Top center */}
       <div className={styles.monthYear}>{monthYear.toUpperCase()}</div>
 
-      {/* Hidden File Input */}
       <input 
         ref={fileInputRef}
         type="file" 
@@ -164,9 +156,7 @@ const CardMaker = () => {
         style={{ display: 'none' }}
       />
 
-      {/* Main Container */}
       <div className={styles.container}>
-        {/* Header with Date and Mood - INSIDE CONTAINER */}
         <div className={styles.header}>
           <div className={styles.dateSection}>
             <div className={styles.dayNumber}>{dayNumber}</div>
@@ -206,7 +196,6 @@ const CardMaker = () => {
           </div>
         </div>
 
-        {/* Title Input */}
         <input 
           type="text"
           value={title}
@@ -215,7 +204,6 @@ const CardMaker = () => {
           className={styles.titleInput}
         />
 
-        {/* Content Section with Text and Image */}
         <div className={styles.contentSection}>
           <textarea 
             ref={textareaRef}
@@ -225,7 +213,12 @@ const CardMaker = () => {
             className={styles.textInput}
             required
           />
-          {image && (
+          {image === 'loading' && (
+            <div className={styles.imageContent}>
+              <div className={styles.imageLoading}>Uploading to Cloudinary...</div>
+            </div>
+          )}
+          {image && image !== 'loading' && (
             <div className={styles.imageContent}>
               <img ref={imageRef} src={image} alt="Memory" />
             </div>
@@ -233,9 +226,8 @@ const CardMaker = () => {
         </div>
       </div>
 
-      {/* Action Buttons - OUTSIDE container, below it */}
       <div className={styles.actionButtons}>
-        <button onClick={handleAddImage} className={styles.addImageBtn} title="Add Image from System">
+        <button onClick={handleAddImage} className={styles.addImageBtn} title="Add Image from System" disabled={image === 'loading'}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
             <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -243,7 +235,7 @@ const CardMaker = () => {
           </svg>
         </button>
         
-        <button onClick={handleDeleteImage} className={styles.deleteImageBtn} title="Delete Image" disabled={!image}>
+        <button onClick={handleDeleteImage} className={styles.deleteImageBtn} title="Delete Image" disabled={!image || image === 'loading'}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
             <line x1="8" y1="12" x2="16" y2="12"/>

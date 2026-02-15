@@ -464,3 +464,19 @@
     height: 18px;
   }
 }
+
+/* Add this to your existing CSS file */
+
+.imageLoading {
+  width: 250px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(135, 206, 235, 0.1);
+  border: 2px dashed rgba(135, 206, 235, 0.5);
+  border-radius: 12px;
+  color: #666;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  font-size: 0.9rem;
+}
