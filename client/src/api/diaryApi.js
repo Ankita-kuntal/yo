@@ -29,3 +29,15 @@ export const createDiary = async (diaryData) => {
   const response = await axios.post(API_URL, diaryData, getAuthHeader());
   return response.data;
 };
+
+// 3. Update a diary
+export const updateDiary = async (id, diaryData) => {
+  const response = await axios.put(`${API_URL}/${id}`, diaryData, getAuthHeader());
+  return response.data;
+};
+
+// 4. Delete a diary
+export const deleteDiary = async (id) => {
+  const response = await axios.delete(`${API_URL}/${id}`, getAuthHeader());
+  return response.data;
+};

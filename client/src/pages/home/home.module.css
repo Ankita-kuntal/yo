@@ -97,7 +97,7 @@
 }
 
 .fabActive {
-  background: #9DD7F5; /* Soft pink/red to indicate close */
+  background: #9DD7F5; 
   transform: translateX(-50%) rotate(0deg);
 }
 

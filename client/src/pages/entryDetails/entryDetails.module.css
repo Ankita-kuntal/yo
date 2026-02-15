@@ -1,93 +1,332 @@
-.container {
-  padding: 40px 20px;
-  /* Transparent because body has the sky background */
-  background: transparent; 
-  min-height: 100vh;
+/* Page Wrapper - SAME Grid Background as Dashboard, NO SCROLL */
+.pageWrapper {
+  height: 100vh; /* Fixed height */
+  width: 100vw; /* Fixed width */
+  overflow: hidden; /* NO SCROLL at all */
+  position: fixed; /* Prevent any scrolling */
+  top: 0;
+  left: 0;
+  
+  /* SAME BACKGROUND AS DASHBOARD - From index.css body styles */
+  /* background: 
+    repeating-linear-gradient(
+      0deg, transparent, transparent 19px, 
+      rgba(135, 206, 235, 0.2) 19px, rgba(135, 206, 235, 0.2) 20px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 19px,
+      rgba(135, 206, 235, 0.2) 19px, rgba(135, 206, 235, 0.2) 20px
+    );
+  background-color: #FFFEF7; */
+  
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* Back Button - Top Left - NO CIRCLE */
 .backBtn {
-  align-self: flex-start;
-  margin-left: 10%;
-  background: white;
-  border: 2px solid #333;
-  padding: 8px 20px;
-  border-radius: 30px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 4px 4px 0px #333; /* Pop-out 3D effect */
   transition: transform 0.1s;
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: #333;
+  padding: 0;
+}
+
+.backBtn:hover {
+  transform: scale(1.1);
 }
 
 .backBtn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #333;
+  transform: scale(0.95);
 }
 
-.paper {
-  background: #fffdf5; /* Warm Paper */
-  width: 100%;
-  max-width: 700px;
-  padding: 60px 50px;
-  position: relative;
-  box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
-  
-  /* THE NOTEBOOK LINES */
-  background-image: 
-    linear-gradient(#999 1px, transparent 1px), /* Horizontal Lines */
-    linear-gradient(90deg, #ff7675 1px, transparent 1px); /* Red Margin Line */
-  background-size: 100% 2em, 2em 100%;
-  background-position: 0 2em, 40px 0;
-  
-  font-family: 'Comic Sans MS', cursive;
-  line-height: 2em; /* Matches grid size */
-}
-
-/* Holes in the paper */
-.paper::after {
-  content: '';
+/* Month and Year - Top Center */
+.monthYear {
   position: absolute;
-  left: 15px;
-  top: 40px;
-  width: 15px;
-  height: 15px;
-  background: #333;
-  border-radius: 50%;
-  box-shadow: 0 40px 0 #333, 0 80px 0 #333, 0 120px 0 #333; /* More holes */
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #333;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  z-index: 10;
 }
 
+/* Content Wrapper - Centers the container and buttons */
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 80px;
+}
+
+/* Main Container - Translucent White, NO SCROLL */
+.container {
+  background: rgba(255, 255, 255, 0.559);
+  backdrop-filter: blur(2px);
+  border-radius: 20px;
+  padding: 50px 60px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 65vh;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow-y: auto; /* Scroll only inside container if content is too long */
+  overflow-x: hidden; /* No horizontal scroll */
+  margin-top: 40px;
+}
+
+/* Custom Scrollbar for Container */
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Header with Day/Date and Mood */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  margin-left: 20px; /* Push past red line */
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.1);
 }
 
-.moodBadge {
-  background: white;
-  border: 2px solid #333;
-  padding: 5px 15px;
-  border-radius: 12px;
+/* Date Section - Left */
+.dateSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dayNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  border-bottom: 2px solid #333;
+  padding-bottom: 2px;
+}
+
+.dayName {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+}
+
+/* Mood Section - Right */
+.moodSection {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: bold;
-  box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+  justify-content: center;
 }
 
+.moodIcon {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+/* Title */
 .title {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  margin-left: 20px;
-  color: #2d3436;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #9DD7F5;
+  text-align: center;
+  margin-bottom: 25px;
+  line-height: 1.3;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
 }
 
-.text {
-  font-size: 1.3rem;
-  margin-left: 20px;
+/* Content Section */
+.contentSection {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.textContent {
+  flex: 1;
+  font-size: 1.15rem;
+  line-height: 1.8;
   color: #333;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+}
+
+.textContent p {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.imageContent {
+  flex: 0 0 250px;
+  max-width: 250px;
+}
+
+.imageContent img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  border: 3px solid white;
+}
+
+/* If no image, text takes full width */
+.contentSection:not(:has(.imageContent)) .textContent {
+  flex: 1;
+  max-width: 100%;
+}
+
+/* Action Buttons - OUTSIDE Container, Aligned to Container's Left Edge */
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  padding-top: 10px;
+  align-self: flex-start;
+  margin-left: calc(5% + 50px); /* Align with container's left edge */
+}
+
+.editBtn,
+.deleteBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0px #333;
+  transition: all 0.15s;
+  color: #333;
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #333;
+}
+
+.editBtn:active,
+.deleteBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #333;
+}
+
+/* Loading and Not Found States */
+.loading,
+.notFound {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.3rem;
+  color: #666;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .monthYear {
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+  }
+
+  .container {
+    padding: 40px 30px;
+    width: 95%;
+    max-height: 65vh;
+  }
+
+  .dayNumber {
+    font-size: 2rem;
+  }
+
+  .moodIcon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .contentSection {
+    flex-direction: column;
+  }
+
+  .imageContent {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .actionButtons {
+    margin-left: calc(2.5% + 5px);
+  }
+
+  .editBtn,
+  .deleteBtn {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .backBtn {
+    font-size: 1.2rem;
+  }
+
+  .container {
+    padding: 30px 20px;
+    max-height: 60vh;
+  }
+
+  .dayNumber {
+    font-size: 1.8rem;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .editBtn svg,
+  .deleteBtn svg {
+    width: 18px;
+    height: 18px;
+  }
 }

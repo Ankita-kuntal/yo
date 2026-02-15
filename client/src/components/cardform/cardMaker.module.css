@@ -1,104 +1,466 @@
-
-.maker {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 500px;
-  text-align: center;
-}
-
-.title {
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.hint {
-  color: #999;
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
-
-.selectedDisplay {
+/* Page Wrapper - SAME Grid Background as Dashboard, NO SCROLL */
+.pageWrapper {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  
+  /* SAME BACKGROUND AS DASHBOARD */
+  background: 
+    repeating-linear-gradient(
+      0deg, transparent, transparent 19px, 
+      rgba(135, 206, 235, 0.2) 19px, rgba(135, 206, 235, 0.2) 20px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 19px,
+      rgba(135, 206, 235, 0.2) 19px, rgba(135, 206, 235, 0.2) 20px
+    );
+  background-color: #FFFEF7;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.bigQuokka {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.moodLabel {
-  padding: 5px 15px;
-  border-radius: 15px;
+/* Back Button - Top Left - NO CIRCLE */
+.backBtn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
-  font-size: 0.9rem;
-}
-
-.form {
+  cursor: pointer;
+  transition: transform 0.1s;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: #333;
+  padding: 0;
 }
 
-.row {
+.backBtn:hover {
+  transform: scale(1.1);
+}
+
+.backBtn:active {
+  transform: scale(0.95);
+}
+
+/* Save Button - Top Right */
+.saveBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: #4CAF50;
+  padding: 0;
+}
+
+.saveBtn:hover {
+  transform: scale(1.1);
+}
+
+.saveBtn:active {
+  transform: scale(0.95);
+}
+
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Month and Year - Top Center (Outside Container) */
+.monthYear {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #333;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  z-index: 1000;
+}
+
+/* Main Container - Translucent White */
+.container {
+  background: rgba(255, 255, 255, 0.559);
+  backdrop-filter: blur(2px);
+  border-radius: 20px;
+  padding: 50px 60px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 65vh;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 80px;
+}
+
+/* Custom Scrollbar for Container */
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Header with Day/Date and Mood - INSIDE CONTAINER */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px dashed rgba(135, 206, 235, 0.5);
 }
 
-.dateInput {
-  padding: 8px;
-  border: 2px solid #eee;
-  border-radius: 8px;
-  font-family: inherit;
+/* Date Section - Left */
+.dateSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.textInput {
-  width: 100%;
-  height: 120px;
+.dayNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  border-bottom: 2px solid #333;
+  padding-bottom: 2px;
+}
+
+.dayNameInput {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  background: transparent;
+  border: 1px dashed rgba(135, 206, 235, 0.5);
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dayNameInput:focus {
+  outline: none;
+  border: 1px solid rgba(135, 206, 235, 0.8);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dayNameInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mood Section - Right */
+.moodSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moodWrapper {
+  position: relative;
+}
+
+.moodIcon {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.moodIcon:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Mood Selector Dropdown */
+.moodSelector {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  background: white;
+  border: 2px solid #333;
+  border-radius: 15px;
+  box-shadow: 5px 5px 0px #333;
   padding: 15px;
-  border: 2px solid #eee;
-  border-radius: 12px;
-  resize: none;
-  font-family: inherit;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  z-index: 100;
+  min-width: 200px;
+}
+
+.moodOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.moodOption:hover {
+  background: rgba(135, 206, 235, 0.2);
+  transform: scale(1.05);
+}
+
+.moodOption img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.moodOption span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+}
+
+/* Title Input */
+.titleInput {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #9DD7F5;
+  text-align: center;
+  margin-bottom: 25px;
+  line-height: 1.3;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed transparent;
+  padding: 10px;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.titleInput:focus {
+  outline: none;
+  border-bottom: 2px dashed rgba(135, 206, 235, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.titleInput::placeholder {
+  color: rgba(157, 215, 245, 0.5);
+}
+
+/* Content Section - Text and Image Side by Side */
+.contentSection {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* Text Input - Height set dynamically by JavaScript */
+.textInput {
+  flex: 1;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #333;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  background: transparent;
+  border: 1px dashed rgba(135, 206, 235, 0.3);
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 250px;
+  resize: none; /* Prevent manual resize, JavaScript handles it */
+  transition: all 0.3s;
 }
 
 .textInput:focus {
   outline: none;
-  border-color: #ccc;
+  border: 1px solid rgba(135, 206, 235, 0.6);
+  background: rgba(255, 255, 255, 0.3);
 }
 
-.submitBtn {
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
+.textInput::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+/* Image Content - Inside Content Section */
+.imageContent {
+  flex: 0 0 250px;
+  max-width: 250px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.imageContent img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* Keep full image visible */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 3px solid white;
+}
+
+/* Action Buttons - OUTSIDE Container */
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  align-self: flex-start;
+  margin-left: calc(5% + 50px);
+}
+
+.addImageBtn,
+.deleteImageBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  background: white;
   cursor: pointer;
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0px #333;
+  transition: all 0.15s;
   color: #333;
 }
 
-.changeMoodBtn {
-  background: none;
-  border: none;
-  text-decoration: underline;
-  color: #888;
-  cursor: pointer;
+.addImageBtn:hover,
+.deleteImageBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #333;
 }
 
-.cancelBtn {
-  margin-top: 20px;
-  background: none;
-  border: none;
-  color: #ff7675;
-  cursor: pointer;
+.addImageBtn:active,
+.deleteImageBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #333;
 }
 
+.deleteImageBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.deleteImageBtn:disabled:hover {
+  transform: none;
+  box-shadow: 3px 3px 0px #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .monthYear {
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+  }
+
+  .container {
+    padding: 40px 30px;
+    width: 95%;
+    max-height: 65vh;
+  }
+
+  .dayNumber {
+    font-size: 2rem;
+  }
+
+  .moodIcon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .moodSelector {
+    grid-template-columns: repeat(2, 1fr);
+    right: -20px;
+  }
+
+  .titleInput {
+    font-size: 1.5rem;
+  }
+
+  .contentSection {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .imageContent {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .actionButtons {
+    margin-left: calc(2.5% + 5px);
+  }
+
+  .addImageBtn,
+  .deleteImageBtn {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .backBtn,
+  .saveBtn {
+    font-size: 1.2rem;
+  }
+
+  .container {
+    padding: 30px 20px;
+    max-height: 60vh;
+  }
+
+  .dayNumber {
+    font-size: 1.8rem;
+  }
+
+  .moodSelector {
+    grid-template-columns: 1fr;
+    right: -10px;
+  }
+
+  .addImageBtn,
+  .deleteImageBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .addImageBtn svg,
+  .deleteImageBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
