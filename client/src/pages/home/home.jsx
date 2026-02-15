@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { fetchDiaries } from '../../api/diaryApi';
 import Card from '../../components/card/card';
 import MoodWheel from '../../components/moodWheel/MoodWheel';
-import Header from '../../components/header_home/header'; // 👈 IMPORT THE NEW HEADER
+import Header from '../../components/header_home/header';
 import styles from './home.module.css';
 
 const Home = () => {
   const navigate = useNavigate();
-  // We removed 'useAuth' from here because Header handles logout now!
   const [diaries, setDiaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showWheel, setShowWheel] = useState(false);
@@ -26,8 +25,8 @@ const Home = () => {
     }
   };
 
-  const handleAddClick = () => {
-    setShowWheel(true);
+  const handleFabClick = () => {
+    setShowWheel((prev) => !prev);
   };
 
   const handleMoodSelect = (mood) => {
@@ -37,10 +36,8 @@ const Home = () => {
 
   return (
     <section className={styles.home}>
-      {/* 👇 NEW HEADER IS HERE */}
       <Header />
 
-      {/* RECENT MEMORIES HEADER */}
       <div className={styles.sectionHeader}>
         <h2>Recent Memories</h2>
         <button className={styles.viewAllBtn} onClick={() => navigate('/all-memories')}>
@@ -48,7 +45,6 @@ const Home = () => {
         </button>
       </div>
 
-      {/* THE GRID (Limit to 6) */}
       <div className={styles.gridContainer}>
         {loading ? (
           <p>Loading...</p>
@@ -63,7 +59,13 @@ const Home = () => {
         )}
       </div>
 
-      <button className={styles.fab} onClick={handleAddClick}>+</button>
+      {/* The FAB remains the same button in both states */}
+      <button 
+        className={`${styles.fab} ${showWheel ? styles.fabActive : ''}`} 
+        onClick={handleFabClick}
+      >
+        {showWheel ? '×' : '+'}
+      </button>
 
       {showWheel && (
         <MoodWheel 

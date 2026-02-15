@@ -1,51 +1,11 @@
 .home {
   min-height: 100vh;
   max-height: 100vh;
-  padding: 0 40px 0 40px; /* NO top padding */
+  padding: 0 40px 0 40px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.appTitle {
-  font-family: var(--font-handwritten);
-  font-size: 2rem; /* Smaller */
-  color: var(--deep-sky);
-  text-align: center;
-  margin: 8px 0 8px 0; /* MINIMAL - only 8px top and bottom */
-  position: relative;
-  text-shadow: 2px 2px 0px rgba(135, 206, 235, 0.3);
-  letter-spacing: 1px;
-}
-
-.appTitle::before,
-.appTitle::after {
-  display: none;
-}
-
-.logoutBtn {
-  position: absolute;
-  top: 8px;
-  right: 15px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border: 2px solid var(--sky-blue);
-  color: var(--deep-sky);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  z-index: 1000;
-}
-
-.logoutBtn:hover {
-  background: var(--pastel-pink);
-  border-color: var(--pastel-pink);
-  color: white;
-  transform: scale(1.05);
 }
 
 .sectionHeader {
@@ -53,14 +13,14 @@
   justify-content: space-between;
   align-items: center;
   max-width: 1050px;
-  margin: 0 auto 10px auto; /* Small margin */
+  margin: 0 auto 10px auto;
   padding: 0;
   width: 100%;
 }
 
 .sectionHeader h2 {
   font-family: var(--font-handwritten);
-  font-size: 1.4rem; /* Smaller */
+  font-size: 1.4rem;
   color: var(--deep-sky);
   position: relative;
   margin: 0;
@@ -75,7 +35,7 @@
 .viewAllBtn {
   background: var(--light-sky);
   color: var(--deep-sky);
-  padding: 6px 12px; /* Smaller */
+  padding: 6px 12px;
   border-radius: 16px;
   border: 2px solid var(--sky-blue);
   font-family: var(--font-body);
@@ -90,17 +50,16 @@
   transform: scale(1.05);
 }
 
-/* CRITICAL FIX: Grid with EXACT heights */
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, minmax(130px, 130px)); /* EXACTLY 130px - no more, no less */
-  gap: 15px; /* Reduced gap */
+  grid-template-rows: repeat(2, minmax(130px, 130px));
+  gap: 15px;
   max-width: 1050px;
   width: 100%;
   margin: 0 auto;
   padding-bottom: 80px;
-  align-items: start; /* Prevent stretching */
+  align-items: start;
 }
 
 .gridContainer > div:nth-child(n+4) {
@@ -120,7 +79,7 @@
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px; /* Smaller */
+  width: 60px;
   height: 60px;
   background: #B4E4FF;
   color: white;
@@ -133,18 +92,24 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100;
+  z-index: 3000; /* Higher than MoodWheel overlay (2000) */
   line-height: 0;
 }
 
+.fabActive {
+  background: #9DD7F5; /* Soft pink/red to indicate close */
+  transform: translateX(-50%) rotate(0deg);
+}
+
 .fab:hover {
-  transform: translateX(-50%) scale(1.1) rotate(90deg);
+  transform: translateX(-50%) scale(1.1);
   background: #9DD7F5;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.fab:active {
-  transform: translateX(-50%) scale(0.95) rotate(90deg);
+.fabActive:hover {
+  background: #9DD7F5;
+  transform: translateX(-50%) scale(1.1);
 }
 
 @media (max-width: 1200px) {
@@ -155,12 +120,68 @@
 }
 
 @media (max-width: 768px) {
-  .appTitle {
-    font-size: 1.6rem;
-  }
-  
   .gridContainer {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
+}
+
+.home {
+  min-height: 100vh;
+  max-height: 100vh;
+  padding: 0 40px 0 40px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1050px;
+  margin: 0 auto 10px auto;
+  width: 100%;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 130px);
+  gap: 15px;
+  max-width: 1050px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.fab {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: #B4E4FF;
+  color: white;
+  font-size: 2.2rem;
+  border: 2px dotted white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3000; /* 👈 ABOVE EVERYTHING */
+  line-height: 0;
+}
+
+.fabActive {
+  background: #9DD7F5; 
+  transform: translateX(-50%) rotate(0deg);
+}
+
+.fab:hover {
+  transform: translateX(-50%) scale(1.1);
 }
