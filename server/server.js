@@ -13,14 +13,20 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Middleware
+
 app.use(express.json());
-const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-};
-app.use(cors(corsOptions));
+app.use(cors()); // Allow all origins
+
+
+
+// app.use(express.json());
+// const corsOptions = {
+//   origin: process.env.CLIENT_URL || 'http://localhost:5173',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// };
+// app.use(cors(corsOptions));
 // app.use(cors({
 //   origin: process.env.CLIENT_URL || 'http://localhost:5173',
 //   credentials: true
