@@ -14,10 +14,17 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Middleware
 app.use(express.json());
-app.use(cors({
+const corsOptions = {
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  credentials: true
-}));
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
+// app.use(cors({
+//   origin: process.env.CLIENT_URL || 'http://localhost:5173',
+//   credentials: true
+// }));
 
 // Database Connection - FIXED! ✅
 mongoose.connect(process.env.MONGODB_URI)

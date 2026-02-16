@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = '/api/upload';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE_URL}/api/upload`;
 
 export const uploadImage = async (file) => {
   const formData = new FormData();
