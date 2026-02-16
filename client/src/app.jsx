@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import AllEntries from './pages/allEntries/allEntries';
 import EntryDetails from './pages/entryDetails/entryDetails';
+import Analytics from './pages/analytics/analytics';
 import './App.css';
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/analytics" 
+            element={<Analytics />} />
 
         </Routes>
       </AuthProvider>

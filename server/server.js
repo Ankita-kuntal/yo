@@ -28,6 +28,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api/diaries', diaryRoutes);
 app.use('/api/upload', require('./routes/uploadRoutes'));
+app.use('/api/analytics', require('./routes/analyticsRoutes'));
 // Port - FIXED! ✅
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

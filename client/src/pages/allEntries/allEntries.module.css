@@ -1,24 +1,27 @@
 .container {
   min-height: 100vh;
   padding: 40px 20px;
-  /* CHANGE THIS TO TRANSPARENT 👇 */
   background-color: transparent;
   font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
 }
-/* ... keep the rest ... */
 
+/* UPDATED HEADER - Now with space-between for Analytics button */
 .header {
   max-width: 1200px;
   margin: 0 auto 30px auto;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* CHANGED: was no justify-content */
   gap: 20px;
+  flex-wrap: wrap; /* ADDED: Responsive wrapping */
 }
 
 .header h1 {
   font-size: 2rem;
   color: #444;
   margin: 0;
+  flex: 1; /* ADDED: Takes up remaining space */
+  text-align: center; /* ADDED: Centers title */
 }
 
 .backBtn {
@@ -38,13 +41,42 @@
   color: #333;
 }
 
+/* NEW: Analytics Button Style */
+.analyticsBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px #333;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.analyticsBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #333;
+}
+
+.analyticsBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #333;
+}
+
 /* SEARCH BAR SECTION */
 .searchBar {
   max-width: 1200px;
   margin: 0 auto 40px auto;
   display: flex;
   gap: 15px;
-  flex-wrap: wrap; /* Wraps on mobile */
+  flex-wrap: wrap;
 }
 
 .searchInput, .dateInput {
@@ -54,11 +86,11 @@
   font-size: 1rem;
   background-color: white;
   transition: border-color 0.2s;
-  font-family: inherit; /* Keeps Comic Sans look */
+  font-family: inherit;
 }
 
 .searchInput {
-  flex: 2; /* Takes up more space */
+  flex: 2;
   min-width: 200px;
 }
 
@@ -69,13 +101,12 @@
 
 .searchInput:focus, .dateInput:focus {
   outline: none;
-  border-color: #ff9f1c; /* Orange focus color */
+  border-color: #ff9f1c;
 }
 
 /* THE GRID LAYOUT */
 .grid {
   display: grid;
-  /* Auto-fill: Fits as many columns as possible (min 300px wide) */
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 25px;
   max-width: 1200px;
@@ -93,14 +124,49 @@
   margin-top: 50px;
 }
 
-/* Mobile Tweak */
-@media (max-width: 600px) {
+/* Mobile Responsive */
+@media (max-width: 768px) {
   .header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
-  
+
+  .header h1 {
+    font-size: 1.5rem;
+    text-align: left;
+    flex: 0 1 auto;
+  }
+
+  .analyticsBtn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
   .searchBar {
     flex-direction: column;
+  }
+
+  .searchInput, .dateInput {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .header h1 {
+    width: 100%;
+    text-align: center;
+    order: -1;
+    margin-bottom: 10px;
+  }
+
+  .backBtn, .analyticsBtn {
+    flex: 1;
+    min-width: 120px;
   }
 }

@@ -42,9 +42,15 @@ const AllEntries = () => {
 
   return (
     <div className={styles.container}>
+      {/* UPDATED HEADER WITH ANALYTICS BUTTON */}
       <div className={styles.header}>
-        <button onClick={() => navigate('/dashboard')} className={styles.backBtn}>← Home</button>
+        <button onClick={() => navigate('/dashboard')} className={styles.backBtn}>
+          ← Home
+        </button>
         <h1>All Memories 📚</h1>
+        <button onClick={() => navigate('/analytics')} className={styles.analyticsBtn}>
+          📊 Analytics
+        </button>
       </div>
 
       {/* SEARCH BAR */}
@@ -66,10 +72,9 @@ const AllEntries = () => {
 
       <div className={styles.grid}>
         {filteredDiaries.map(d => (
-            // Wrap Card in a div to handle clicks
-            <div key={d._id} onClick={() => navigate(`/memory/${d._id}`)}>
-              <Card diary={d} />
-            </div>
+          <div key={d._id} onClick={() => navigate(`/memory/${d._id}`)}>
+            <Card diary={d} />
+          </div>
         ))}
       </div>
     </div>
