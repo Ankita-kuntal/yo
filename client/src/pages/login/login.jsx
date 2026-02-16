@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { signInWithPopup } from "firebase/auth"; // 👈 Firebase functions
-import { auth, provider } from '../../firebase'; // 👈 Your config
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from '../../firebase';
 import styles from './login.module.css';
 import { useAuth } from '../../context/AuthContext';
+
+// Base URL from environment
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,45 +19,53 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // NORMAL LOGIN
+  // Normal Email/Password Login or Signup
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    const endpoint = isSignup ? 'https://moodokka-backend.onrender.com/api/auth/register' : 'https://moodokka-backend.onrender.com/api/auth/login';//isko delete krna ha 
+
+    const endpoint = isSignup
+      ? `${API_URL}/api/auth/register`
+      : `${API_URL}/api/auth/login`;
 
     try {
       const response = await axios.post(endpoint, { email, password });
+      
+      // Save token + userId in context
       login(response.data.token, response.data._id);
       navigate('/dashboard');
+
     } catch (err) {
-      setError(err.response?.data?.message || 'Error occurred');
+      setError(err.response?.data?.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
   };
 
-  // GOOGLE LOGIN HANDLER
+  // Google Login
   const handleGoogleLogin = async () => {
     setError('');
     setLoading(true);
+
     try {
-      // 1. Pop up Google Window
+      // Step 1: Firebase Google popup
       const result = await signInWithPopup(auth, provider);
       const googleEmail = result.user.email;
 
-      // 2. Send Email to Backend to create account/login
-      const response = await axios.post('/api/auth/google', { 
-        email: googleEmail 
-      });
+      // Step 2: Send to backend
+      const response = await axios.post(
+        `${API_URL}/api/auth/google`,
+        { email: googleEmail }
+      );
 
-      // 3. Login with the token our backend gave us
+      // Step 3: Save token
       login(response.data.token, response.data._id);
       navigate('/dashboard');
 
     } catch (err) {
       console.error(err);
-      setError("Google Login Failed. Check console.");
+      setError('Google Login Failed');
     } finally {
       setLoading(false);
     }
@@ -64,7 +75,12 @@ const Login = () => {
     <section className={styles.login}>
       <div className={styles.card}>
         <h1>{isSignup ? 'Create Account' : 'Welcome Back'}</h1>
-        {error && <p style={{ color: '#ff7675', marginBottom: '10px' }}>{error}</p>}
+
+        {error && (
+          <p style={{ color: '#ff7675', marginBottom: '10px' }}>
+            {error}
+          </p>
+        )}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
@@ -75,6 +91,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+
           <input
             type="password"
             placeholder="Password"
@@ -83,26 +100,46 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? 'Processing...' : (isSignup ? 'Sign Up' : 'Login')}
+
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={loading}
+          >
+            {loading
+              ? 'Processing...'
+              : isSignup
+              ? 'Sign Up'
+              : 'Login'}
           </button>
         </form>
 
-        <button onClick={handleGoogleLogin} className={styles.googleBtn} type="button">
-          <img 
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-            alt="Google" 
-            width="20" 
+        {/* Google Button */}
+        <button
+          onClick={handleGoogleLogin}
+          className={styles.googleBtn}
+          type="button"
+        >
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+            width="20"
           />
           {isSignup ? 'Sign up with Google' : 'Sign in with Google'}
         </button>
 
         <div className={styles.footer}>
           <p>
-            {isSignup ? 'Already have an account? ' : 'New here? '}
+            {isSignup
+              ? 'Already have an account? '
+              : 'New here? '}
             <span
               onClick={() => setIsSignup(!isSignup)}
-              style={{ cursor: 'pointer', color: '#ff9f1c', fontWeight: 'bold' }}
+              style={{
+                cursor: 'pointer',
+                color: '#ff9f1c',
+                fontWeight: 'bold',
+              }}
             >
               {isSignup ? 'Login' : 'Create Account'}
             </span>

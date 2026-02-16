@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors()); // Allow all origins
 
 
-
+//use this if needed no need 
 // app.use(express.json());
 // const corsOptions = {
 //   origin: process.env.CLIENT_URL || 'http://localhost:5173',
