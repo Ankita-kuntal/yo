@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    const endpoint = isSignup ? '/api/auth/register' : '/api/auth/login';
+    const endpoint = isSignup ? 'https://moodokka-backend.onrender.com/api/auth/register' : 'https://moodokka-backend.onrender.com/api/auth/login';
 
     try {
       const response = await axios.post(endpoint, { email, password });
